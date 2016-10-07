@@ -3,8 +3,6 @@ package ru.spb.nkurasov.tester.serialization;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.esotericsoftware.kryo.io.UnsafeMemoryInput;
-import com.esotericsoftware.kryo.io.UnsafeMemoryOutput;
 import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +12,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * Provides base functionality for Kryo serialization. Subclasses must implement
+ * factory methods which creates concrete serializers/deserializers
+ *
  * @author nkurasov
  */
 abstract class AbstractKryoSerializer implements Serializer {
@@ -22,7 +23,7 @@ abstract class AbstractKryoSerializer implements Serializer {
 
     private final Kryo kryo = new Kryo();
 
-    public AbstractKryoSerializer(Class<?> loggerClass) {
+    AbstractKryoSerializer(Class<?> loggerClass) {
         log = LoggerFactory.getLogger(loggerClass);
     }
 
@@ -47,8 +48,20 @@ abstract class AbstractKryoSerializer implements Serializer {
         }
     }
 
+    /**
+     * Creates concrete Kryo serializer
+     *
+     * @param out receiver for serialized object
+     * @return serializer, may not be {@code null}
+     */
     protected abstract Output newOutput(OutputStream out);
 
+    /**
+     * Creates concrete Kryo deserializer
+     *
+     * @param in source of serialized object
+     * @return serializer, may not be {@code null}
+     */
     protected abstract Input newInput(InputStream in);
 
 }

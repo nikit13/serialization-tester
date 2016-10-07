@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 
 /**
+ * This is a wrapper over standard Java serialization mechanism.
+ * Uses {@link ObjectOutputStream} and {@link ObjectInputStream}
+ * for serialization/deserialization of objects
+ *
  * @author nkurasov
  */
 public class JavaSerializer implements Serializer {
