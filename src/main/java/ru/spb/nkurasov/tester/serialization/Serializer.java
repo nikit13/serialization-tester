@@ -1,12 +1,16 @@
 package ru.spb.nkurasov.tester.serialization;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
- * Created by Nikita on 05.10.2016.
+ * @author nkurasov
  */
 public interface Serializer {
 
-    void serialize(Object obj, String outputFile) throws Exception;
+    void serialize(Object obj, OutputStream output) throws IOException;
 
-    <T> T deserialize(String inputFile, Class<T> cls) throws Exception;
+    <T> T deserialize(InputStream input, Class<T> cls) throws IOException;
 
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Nikita on 04.10.2016.
+ * @author nkurasov
  */
 public class Meta implements Serializable {
 
@@ -16,7 +16,9 @@ public class Meta implements Serializable {
     private Map<String, Set<Long>> longs = Maps.newHashMap();
 
     @GeneratedValue(generator = "longMapGen")
-    private  Map<String, Map<String, Set<Long>>> longs2 = Maps.newHashMap();
+    private Map<String, Map<String, Set<Long>>> longs2 = Maps.newHashMap();
+
+    private Map<String, Map<String, Map<String, Set<int[]>>>> veryBigMap = Maps.newHashMap();
 
     public Map<String, Map<String, Set<Long>>> getLongs2() {
         return longs2;
@@ -32,5 +34,13 @@ public class Meta implements Serializable {
 
     public void setLongs(Map<String, Set<Long>> longs) {
         this.longs = longs;
+    }
+
+    public Map<String, Map<String, Map<String, Set<int[]>>>> getVeryBigMap() {
+        return veryBigMap;
+    }
+
+    public void setVeryBigMap(Map<String, Map<String, Map<String, Set<int[]>>>> veryBigMap) {
+        this.veryBigMap = veryBigMap;
     }
 }

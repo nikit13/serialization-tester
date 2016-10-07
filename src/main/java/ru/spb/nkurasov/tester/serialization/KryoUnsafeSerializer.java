@@ -11,33 +11,25 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
- * Created by Nikita on 05.10.2016.
+ * @author nkurasov
  */
-public class KryoUnsafeSerializer implements Serializer {
+public class KryoUnsafeSerializer extends AbstractKryoSerializer {
 
-    private static final Logger log = LoggerFactory.getLogger(KryoUnsafeSerializer.class);
-
-    private Kryo kryo = new Kryo();
-
-    @Override
-    public void serialize(Object obj, String outputFile) throws Exception {
-        Stopwatch s = Stopwatch.createStarted();
-        try (Output out = new UnsafeOutput(new FileOutputStream(outputFile))) {
-            kryo.writeObject(out, obj);
-        } finally {
-            log.info("serialized to " + outputFile + " - " + s.stop());
-        }
+    public KryoUnsafeSerializer() {
+        super(KryoUnsafeSerializer.class);
     }
 
     @Override
-    public <T> T deserialize(String inputFile, Class<T> cls) throws Exception {
-        Stopwatch s = Stopwatch.createStarted();
-        try (Input in = new UnsafeInput(new FileInputStream(inputFile))) {
-            return kryo.readObject(in, cls);
-        } finally {
-            log.info("deserialized from " + inputFile + " - " + s.stop());
-        }
+    protected Output newOutput(OutputStream out) {
+        return new UnsafeOutput(out);
+    }
+
+    @Override
+    protected Input newInput(InputStream in) {
+        return new UnsafeInput(in);
     }
 }

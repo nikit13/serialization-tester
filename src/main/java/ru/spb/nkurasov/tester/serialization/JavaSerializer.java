@@ -4,36 +4,35 @@ import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
- * Created by Nikita on 05.10.2016.
+ * @author nkurasov
  */
 public class JavaSerializer implements Serializer {
 
     private static final Logger log = LoggerFactory.getLogger(JavaSerializer.class);
 
     @Override
-    public void serialize(Object obj, String outputFile) throws Exception {
+    public void serialize(Object obj, OutputStream output) throws IOException {
         Stopwatch t = Stopwatch.createStarted();
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(outputFile))) {
+        try (ObjectOutputStream out = new ObjectOutputStream(output)) {
             out.writeObject(obj);
         } finally {
-            log.info("serialized to " + outputFile + " - " + t.stop());
+            log.info("serialized to - " + t.stop());
         }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T deserialize(String inputFile, Class<T> cls) throws Exception {
+    @SuppressWarnings({"unchecked", "unused"})
+    public <T> T deserialize(InputStream input, Class<T> cls) throws IOException {
         Stopwatch s = Stopwatch.createStarted();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(inputFile))) {
+        try (ObjectInputStream in = new ObjectInputStream(input)) {
             return (T) in.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("cannot read object", e);
         } finally {
-            log.info("deserialized from " + inputFile + " - " + s.stop());
+            log.info("deserialized from - " + s.stop());
         }
     }
 }

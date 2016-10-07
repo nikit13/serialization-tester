@@ -3,7 +3,7 @@ package ru.spb.nkurasov.tester.generation;
 import java.util.Random;
 
 /**
- * Created by Nikita on 04.10.2016.
+ * @author nkurasov
  */
 public abstract class RandomGenerator<T> implements ValueGenerator<T> {
 

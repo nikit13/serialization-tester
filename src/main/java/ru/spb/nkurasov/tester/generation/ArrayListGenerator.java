@@ -3,7 +3,7 @@ package ru.spb.nkurasov.tester.generation;
 import java.util.ArrayList;
 
 /**
- * Created by Nikita on 04.10.2016.
+ * @author nkurasov
  */
 public class ArrayListGenerator<T> extends CollectionGenerator<T, ArrayList<T>> {
 

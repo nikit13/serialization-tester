@@ -4,14 +4,14 @@ import java.util.Collection;
 import java.util.Random;
 
 /**
- * Created by Nikita on 04.10.2016.
+ * @author nkurasov
  */
 public abstract class CollectionGenerator<T, V extends Collection<T>> implements ValueGenerator<V> {
     private final Random r = new Random(System.nanoTime());
 
     private ValueGenerator<T> elementGenerator;
 
-    private int minSize = Integer.MIN_VALUE;
+    private int minSize = 0;
 
     private int maxSize = Integer.MAX_VALUE;
 

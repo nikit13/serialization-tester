@@ -16,7 +16,7 @@ public class HashMapGenerator<K, V> implements ValueGenerator<HashMap<K, V>> {
 
     private ValueGenerator<V> valueGenerator;
 
-    private int minSize = Integer.MIN_VALUE;
+    private int minSize = 0;
 
     private int maxSize = Integer.MAX_VALUE;
 
