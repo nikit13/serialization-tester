@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="ru.spb.nkurasov.tester.generation.GeneratedValueBeanPostProcessor"/>
+
+    <bean id="stringGen" class="ru.spb.nkurasov.tester.generation.StringGenerator"/>
+    <bean id="longGen" class="ru.spb.nkurasov.tester.generation.LongGenerator"/>
+
+    <bean id="smallSetGen" class="ru.spb.nkurasov.tester.generation.HashSetGenerator">
+        <property name="elementGenerator" ref="longGen"/>
+        <property name="minSize" value="150"/>
+        <property name="maxSize" value="200"/>
+    </bean>
+
+    <bean id="mapGen" class="ru.spb.nkurasov.tester.generation.HashMapGenerator">
+        <property name="keyGenerator" ref="stringGen"/>
+        <property name="valueGenerator" ref="smallSetGen"/>
+        <property name="minSize" value="150"/>
+        <property name="maxSize" value="200"/>
+    </bean>
+
+    <bean id="longMapGen" class="ru.spb.nkurasov.tester.generation.HashMapGenerator">
+        <property name="keyGenerator" ref="stringGen"/>
+        <property name="valueGenerator" ref="mapGen"/>
+        <property name="minSize" value="150"/>
+        <property name="maxSize" value="200"/>
+    </bean>
+
+    <bean id="javaSerializer" class="ru.spb.nkurasov.tester.serialization.JavaSerializer"/>
+    <bean id="kryoSerializer" class="ru.spb.nkurasov.tester.serialization.KryoSerializer"/>
+    <bean id="kryoUnsafeSerializer" class="ru.spb.nkurasov.tester.serialization.KryoUnsafeSerializer"/>
+    <bean id="kryoUnsafeMemorySerializer" class="ru.spb.nkurasov.tester.serialization.KryoUnsafeMemorySerializer"/>
+
+    <bean id="meta" class="ru.spb.nkurasov.tester.serialization.Meta"/>
+
+</beans>
